@@ -1,11 +1,72 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "uv-project-demo"
 version = "0.1.0"
-description = "Add your description here"
+description = "A Python project managed by uv with best practices"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = [
-    "black>=25.1.0",
-    "flake8>=7.3.0",
-    "pytest>=8.4.1",
+authors = [{ name = "Your Name", email = "your.email@example.com" }]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = ["black>=25.1.0", "flake8>=7.3.0", "pytest>=8.4.1"]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/uv-project-demo"
+Repository = "https://github.com/yourusername/uv-project-demo"
+Issues = "https://github.com/yourusername/uv-project-demo/issues"
+
+[project.scripts]
+uv-project-demo = "uv_project_demo.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/uv_project_demo"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "-v",
+    "--strict-markers",
+    "--strict-config",
+    "--cov=src/uv_project_demo",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+]
+
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+exclude = [".git", "__pycache__", "build", "dist", ".venv"]
+
+[dependency-groups]
+dev = [
+    "pytest-cov>=6.2.1",
 ]
