@@ -43,6 +43,11 @@ addopts = [
     "--cov-report=html",
 ]
 
+[tool.coverage.run]
+omit = [
+    "*/demo.py",
+]
+
 [tool.black]
 line-length = 88
 target-version = ["py312"]
